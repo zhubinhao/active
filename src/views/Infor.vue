@@ -28,8 +28,6 @@ export default {
   },
   methods: {
     submits() {
-
-return
       let data = {
         reg: "2018",
         accountname: "weixin",

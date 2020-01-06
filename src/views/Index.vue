@@ -23,7 +23,7 @@
       <p>活动内容</p>
       <pre>{{obj.rermark}}</pre>
     </div>
-    <mt-button type="primary" class="primary" @click="nactveTo" v-if="wxopenid">预约</mt-button>
+    <mt-button type="primary" class="primary" @click="nactveTo" v-if="isTrue&&wxopenid">预约</mt-button>
   </div>
 </template>
 
@@ -35,7 +35,8 @@ export default {
       obj: {},
       subject: "",
       wxopenid: "",
-      isYue:true
+      isYue:true,
+      isTrue:false
     };
   },
   mounted() {
@@ -103,8 +104,11 @@ export default {
       this.axios
         .get(`Subject_Read/${JSON.stringify(data)}`)
         .then(_ => {
-          console.log(_.start2);
-          console.log(_.end2);
+         
+          let time = +new Date()
+          if(time>=(_.start2*1000)&&time<=(_.end2*1000)){
+            this.isTrue = true;
+          }
           let arr = [];
           for (let i = 1; i <= 5; i++) {
             arr.push(_[`url${i}`]);
